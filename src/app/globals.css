@@ -1,0 +1,67 @@
+@import "tailwindcss";
+
+:root {
+  --background: #F5F2EA;
+  --foreground: #182235;
+
+  /* ColisPreuve palette : ton "papier kraft + tampon officiel" -- évoque le
+     bordereau de livraison et la preuve tamponnée, distinct de la palette
+     verte/dorée de Scolaris. */
+  --color-ink: #182235;
+  --color-ink-soft: #3E4A5E;
+  --color-ink-muted: #62697A;
+  --color-ink-faint: #8B90A0;
+
+  --color-paper: #F5F2EA;
+  --color-paper-sunk: #EAE4D5;
+  --color-card: #FFFFFF;
+  --color-card-alt: #F1ECE0;
+  --color-border: #DDD4C0;
+  --color-border-soft: #E3DACB;
+  --color-border-input: #D5CBB4;
+
+  --color-navy-deep: #16233D;
+  --color-navy: #2B4C7E;
+  --color-navy-dark: #1F3A61;
+  --color-navy-tint: #E7EDF5;
+  --color-navy-muted: #8FA3C2;
+
+  --color-amber: #D98E2B;
+  --color-rouge: #B4432E;
+  --color-rouge-tint: #F7E4DE;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-ink: var(--color-ink);
+  --color-ink-soft: var(--color-ink-soft);
+  --color-ink-muted: var(--color-ink-muted);
+  --color-ink-faint: var(--color-ink-faint);
+
+  --color-paper: var(--color-paper);
+  --color-paper-sunk: var(--color-paper-sunk);
+  --color-card: var(--color-card);
+  --color-card-alt: var(--color-card-alt);
+  --color-border: var(--color-border);
+  --color-border-soft: var(--color-border-soft);
+  --color-border-input: var(--color-border-input);
+
+  --color-navy-deep: var(--color-navy-deep);
+  --color-navy: var(--color-navy);
+  --color-navy-dark: var(--color-navy-dark);
+  --color-navy-tint: var(--color-navy-tint);
+  --color-navy-muted: var(--color-navy-muted);
+
+  --color-amber: var(--color-amber);
+  --color-rouge: var(--color-rouge);
+  --color-rouge-tint: var(--color-rouge-tint);
+
+  --font-sans: var(--font-body);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
