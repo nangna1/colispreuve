@@ -1,7 +1,16 @@
+import Link from "next/link";
 import { notFound } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { getExpedition, getPreuvesForExpedition, getChauffeurs, STATUT_LABEL } from "@/lib/data/expeditions";
+import { getIncidentsForExpedition } from "@/lib/data/incidents";
 import AssignChauffeur from "./assign-chauffeur";
+
+const INCIDENT_LABEL: Record<string, string> = {
+  ecart_quantite: "Écart de quantité",
+  dommage: "Marchandise endommagée",
+  retard: "Retard",
+  autre: "Autre",
+};
 
 export default async function ExpeditionDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -9,10 +18,12 @@ export default async function ExpeditionDetailPage({ params }: { params: Promise
   const expedition = await getExpedition(supabase, id);
   if (!expedition) notFound();
 
-  const [preuves, chauffeurs] = await Promise.all([
+  const [preuves, chauffeurs, incidents] = await Promise.all([
     getPreuvesForExpedition(supabase, id),
     getChauffeurs(supabase),
+    getIncidentsForExpedition(supabase, id),
   ]);
+  const incidentsOuverts = incidents.filter((i) => i.statut === "ouvert");
   const chauffeurAssigne = chauffeurs.find((c) => c.id === expedition.chauffeur_id);
   const lienSuivi = `/suivi/${expedition.token_public}`;
 
@@ -38,6 +49,30 @@ export default async function ExpeditionDetailPage({ params }: { params: Promise
           <AssignChauffeur expeditionId={expedition.id} chauffeurs={chauffeurs} chauffeurActuelId={expedition.chauffeur_id} />
           {chauffeurAssigne && <div className="mt-2 text-sm text-ink-soft">{chauffeurAssigne.telephone ?? ""}</div>}
         </div>
+
+        {incidentsOuverts.length > 0 && (
+          <div className="rounded-2xl border border-rouge bg-rouge-tint p-5">
+            <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-rouge">
+              Litige{incidentsOuverts.length > 1 ? "s" : ""} ouvert{incidentsOuverts.length > 1 ? "s" : ""}
+            </div>
+            <div className="flex flex-col gap-2.5">
+              {incidentsOuverts.map((incident) => (
+                <div key={incident.id} className="flex items-center justify-between gap-3 rounded-lg bg-white p-3">
+                  <div>
+                    <div className="text-sm font-semibold text-ink">{INCIDENT_LABEL[incident.type] ?? incident.type}</div>
+                    {incident.description && <div className="text-xs text-ink-muted">{incident.description}</div>}
+                  </div>
+                  <Link
+                    href={`/expediteur/expeditions/${expedition.id}/lettre/${incident.id}`}
+                    className="shrink-0 rounded-lg bg-navy px-3 py-2 text-xs font-semibold text-white hover:bg-navy-dark"
+                  >
+                    Générer la lettre
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="rounded-2xl border border-border bg-card p-5">
           <div className="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-ink-faint">Lien de suivi public</div>

@@ -27,8 +27,7 @@ Voir le plan complet dans
 2. ~~Dashboard expéditeur~~ ✅
 3. ~~App chauffeur en mode hors-ligne~~ ✅
 4. ~~Portail public de suivi~~ ✅ (statut + photos de preuve)
-5. Génération de lettre de réclamation *(détection d'écart déjà en place —
-   voir `lib/data/preuves.ts` — reste à générer le PDF)*
+5. ~~Génération de lettre de réclamation~~ ✅
 6. Notification destinataire (SMS/WhatsApp)
 
 ## 1. Créer le projet Supabase
@@ -68,6 +67,23 @@ rôle du compte connecté.
 rien — l'authentification est vérifiée sur chaque requête (`src/proxy.ts`),
 y compris `/login`. Seules `/login` et `/suivi/[token]` sont accessibles
 sans compte.
+
+## Lettre de réclamation
+
+Quand un chauffeur enregistre une livraison avec une quantité constatée
+différente de la quantité déclarée, un incident est ouvert automatiquement
+(`lib/data/preuves.ts`) et l'expédition passe au statut "litige" plutôt que
+"livrée". Depuis la fiche de l'expédition, l'expéditeur clique "Générer la
+lettre" : une lettre pré-remplie s'affiche (contenu digitalisé à partir des
+modèles du kit "gestion et logistique", adapté pour référencer la preuve
+photo/géolocalisation horodatée plutôt qu'un simple constat déclaratif),
+imprimable/exportable en PDF via le navigateur (Ctrl+P → Enregistrer en
+PDF) — même approche que le dossier de plaidoyer de Scolaris, pas de
+génération PDF côté serveur.
+
+Nécessite `NEXT_PUBLIC_SITE_URL` (voir `.env.example`) pour que le lien de
+suivi inclus dans la lettre soit une URL absolue, utilisable une fois
+imprimée.
 
 ## Comptes chauffeur
 
