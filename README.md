@@ -28,7 +28,13 @@ Voir le plan complet dans
 3. ~~App chauffeur en mode hors-ligne~~ ✅
 4. ~~Portail public de suivi~~ ✅ (statut + photos de preuve)
 5. ~~Génération de lettre de réclamation~~ ✅
-6. Notification destinataire (SMS/WhatsApp)
+6. ~~Notification destinataire (SMS/WhatsApp)~~ ✅
+
+Les 6 étapes du plan initial sont maintenant construites. Reste
+principalement les intégrations réelles (SMS/WhatsApp, voir
+`lib/providers/messaging-provider.ts`) une fois les comptes obtenus, et les
+tests automatisés (aucun pour l'instant — voir la section "Suite
+recommandée" ci-dessous).
 
 ## 1. Créer le projet Supabase
 
@@ -87,7 +93,7 @@ imprimée.
 
 ## Comptes chauffeur
 
-Depuis le tableau de bord expéditeur (à construire — étape 2), l'expéditeur
+Depuis le tableau de bord expéditeur (`/expediteur/chauffeurs`), l'expéditeur
 crée un accès chauffeur (`createDriverAccess`,
 `src/app/actions/driver-access.ts`) : un code à 8 caractères est généré, un
 vrai compte `auth.users` est créé côté serveur via la clé service_role, et
@@ -107,6 +113,17 @@ Auth, qui exige un identifiant, mais n'est ni affiché ni utilisé ailleurs)
 `src/app/actions/tracking.ts` — volontairement **aucune policy RLS
 ouverte à `anon`** sur la table `expeditions` : la Server Action utilise le
 client `service_role` et ne renvoie que les champs utiles au destinataire.
+
+## Notification destinataire
+
+À la création d'une expédition (si un téléphone destinataire est renseigné),
+et à tout moment ensuite via "Renvoyer le lien" sur la fiche de
+l'expédition, un message contenant le lien de suivi est envoyé via
+`consoleMessagingProvider` (`src/app/actions/expeditions.ts`,
+`envoyerLienSuivi`) — stub tant qu'aucun compte WhatsApp Business/SMS n'est
+branché (voir `lib/providers/messaging-provider.ts`). L'échec de l'envoi ne
+bloque jamais la création de l'expédition : le lien reste consultable
+manuellement dans tous les cas.
 
 ## Surveillance d'erreurs (Sentry)
 

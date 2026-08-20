@@ -4,6 +4,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getExpedition, getPreuvesForExpedition, getChauffeurs, STATUT_LABEL } from "@/lib/data/expeditions";
 import { getIncidentsForExpedition } from "@/lib/data/incidents";
 import AssignChauffeur from "./assign-chauffeur";
+import ResendTrackingLink from "./resend-tracking-link";
 
 const INCIDENT_LABEL: Record<string, string> = {
   ecart_quantite: "Écart de quantité",
@@ -79,6 +80,7 @@ export default async function ExpeditionDetailPage({ params }: { params: Promise
           <a href={lienSuivi} target="_blank" rel="noreferrer" className="text-sm text-navy hover:underline">
             {lienSuivi}
           </a>
+          {expedition.destinataire_telephone && <ResendTrackingLink expeditionId={expedition.id} />}
         </div>
 
         <div className="rounded-2xl border border-border bg-card p-5">
