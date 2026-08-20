@@ -26,7 +26,7 @@ Voir le plan complet dans
 1. ~~Fondation~~ ✅
 2. ~~Dashboard expéditeur~~ ✅
 3. ~~App chauffeur en mode hors-ligne~~ ✅
-4. Portail public de suivi *(squelette fonctionnel déjà en place)*
+4. ~~Portail public de suivi~~ ✅ (statut + photos de preuve)
 5. Génération de lettre de réclamation *(détection d'écart déjà en place —
    voir `lib/data/preuves.ts` — reste à générer le PDF)*
 6. Notification destinataire (SMS/WhatsApp)
