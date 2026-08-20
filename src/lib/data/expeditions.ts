@@ -25,6 +25,17 @@ export async function getExpeditions(supabase: SupabaseClient<Database>): Promis
   return data;
 }
 
+// Expéditions assignées au chauffeur appelant — RLS
+// expeditions_chauffeur_read (0001_init.sql) limite déjà le résultat.
+export async function getMesExpeditions(supabase: SupabaseClient<Database>): Promise<Expedition[]> {
+  const { data, error } = await supabase
+    .from("expeditions")
+    .select("*")
+    .order("created_at", { ascending: false });
+  if (error) throw error;
+  return data;
+}
+
 export async function getExpedition(
   supabase: SupabaseClient<Database>,
   id: string,

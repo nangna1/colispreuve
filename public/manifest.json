@@ -1,0 +1,14 @@
+{
+  "name": "ColisPreuve — App chauffeur",
+  "short_name": "ColisPreuve",
+  "description": "Enlèvement et livraison de colis : photo, géolocalisation, signature — même hors connexion.",
+  "start_url": "/chauffeur",
+  "scope": "/chauffeur",
+  "display": "standalone",
+  "background_color": "#F5F2EA",
+  "theme_color": "#16233D",
+  "lang": "fr",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
