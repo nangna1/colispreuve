@@ -20,17 +20,15 @@ Trois volets dans une seule codebase :
 
 ## État d'avancement
 
-Cette passe pose la **fondation** uniquement (schéma, RLS, authentification
-expéditeur/chauffeur, surveillance d'erreurs) — voir le plan complet dans
-`C:\Users\HP\.claude\plans\sequential-dreaming-coral.md`. Les vrais écrans
-(tableau de bord expéditeur, flux chauffeur avec photo/géoloc/signature,
-génération de lettre de réclamation) restent à construire, dans cet ordre :
+Voir le plan complet dans
+`C:\Users\HP\.claude\plans\sequential-dreaming-coral.md`.
 
 1. ~~Fondation~~ ✅
-2. Dashboard expéditeur
-3. App chauffeur en mode hors-ligne
+2. ~~Dashboard expéditeur~~ ✅
+3. ~~App chauffeur en mode hors-ligne~~ ✅
 4. Portail public de suivi *(squelette fonctionnel déjà en place)*
-5. Génération de lettre de réclamation
+5. Génération de lettre de réclamation *(détection d'écart déjà en place —
+   voir `lib/data/preuves.ts` — reste à générer le PDF)*
 6. Notification destinataire (SMS/WhatsApp)
 
 ## 1. Créer le projet Supabase
